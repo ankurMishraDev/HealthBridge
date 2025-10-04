@@ -150,7 +150,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           age: editedAge.trim() ? Number.parseInt(editedAge) : currentUser.age,
           gender: editedGender.trim() || currentUser.gender,
         };
-        localStorage.setItem("curez_user", JSON.stringify(updatedUser));
+        localStorage.setItem("anamai_user", JSON.stringify(updatedUser));
 
         // Update current user in parent component
         if (onUserUpdate) {

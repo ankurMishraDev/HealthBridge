@@ -7,7 +7,7 @@ import { useTranslation } from "@/hooks/useTranslation";
 export default function Footer() {
   const { t } = useTranslation();
   return (
-    <footer className="relative z-10 pt-16 pb-0 bg-gradient-to-b from-orange-50/50 via-white to-orange-50/30 mt-auto overflow-hidden w-full">
+    <footer className="relative z-10 pt-16 pb-0 bg-gradient-to-b from-blue-50/50 via-white to-blue-50/30 mt-auto overflow-hidden w-full">
       {/* Background decorative elements */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 w-20 h-20 bg-primary rounded-full blur-xl"></div>
@@ -29,11 +29,9 @@ export default function Footer() {
               }}
               className="flex items-center gap-3 cursor-pointer transition-all duration-300 hover:opacity-80 w-fit"
             >
-              <div className="p-2 bg-primary/10 rounded-xl">
-                <Brain className="w-8 h-8 text-primary" />
-              </div>
+              <img src="/Logo.png" alt="AnamAI Logo" className="w-12 h-12" />
               <span className="text-3xl font-bold text-primary">
-                {t("footer_cureZ")}
+                {t("footer_anamai")}
               </span>
             </motion.div>
             

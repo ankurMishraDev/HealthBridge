@@ -44,7 +44,7 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
   return (
     <>
 
-      <div className="relative min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-100 overflow-hidden">
+      <div className="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 overflow-hidden">
         {/* Background Video */}
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
@@ -64,106 +64,181 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
         <div className="absolute bottom-20 right-10 w-40 h-40 bg-secondary/10 rounded-full blur-xl z-0" />
 
         {/* Navigation Bar */}
-        <nav
-          className={`fixed left-1/2 transform -translate-x-1/2 z-50 py-4 px-6 transition-all duration-500 ease-out ${
-            navbarOpacity > 0
-              ? "w-auto max-w-2xl top-2"
-              : "w-full max-w-none top-4"
-          }`}
-          style={{
-            background: navbarOpacity > 0 
-              ? `rgba(249, 115, 22, ${0.8 * navbarOpacity})` 
-              : 'transparent',
-            backdropFilter: navbarOpacity > 0 ? 'blur(8px)' : 'none',
-            border: navbarOpacity > 0 ? `1px solid rgba(249, 115, 22, ${0.3 * navbarOpacity})` : 'none',
-            borderRadius: navbarOpacity > 0 ? '1rem' : '0',
-          }}
-        >
-          <div className="flex justify-between items-center mx-20">
-            {/* Logo */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="text-white ribeye-regular text-3xl drop-shadow-lg pr-6 cursor-pointer transition-all duration-300 hover:text-orange-200"
-            >
-              CureZ
-            </motion.div>
+        {navbarOpacity === 0 && (
+          <nav className="fixed left-1/2 transform -translate-x-1/2 z-50 w-full max-w-none top-4 py-4 px-6">
+            <div className="flex justify-between items-center mx-20">
+              {/* Logo */}
+              <div className="flex items-center gap-3">
+                <img src="/Logo.png" alt="AnamAI Logo" className="w-20 h-20"/>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="text-black text-5xl drop-shadow-lg pr-6 cursor-pointer transition-all duration-300 hover:text-blue-200"
+                >
+                  AnamAI
+                </motion.div>
+              </div>
 
-            {/* Navigation Links */}
-            <div className="flex items-center gap-4 text-white/90 font-sans text-lg font-semibold drop-shadow-md">
-              {isMounted && <LanguageSwitcher />}
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => {
-                  const element = document.getElementById('why-choose-curez');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }}
-                className="hover:text-white transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
-              >
-                {t("hero_ourMission")}
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => {
-                  const element = document.getElementById('wellness-journey');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }}
-                className="hover:text-white transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
-              >
-                {t("hero_resources")}
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onClick={() => {
-                  const element = document.getElementById('faq-section');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }}
-                className="hover:text-white transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
-              >
-                {t("hero_faq")}
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="hover:text-white transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
-              >
-                <Link href="/doctor/auth">For Doctors</Link>
-              </motion.button>
+              {/* Navigation Links */}
+              <div className="flex items-center gap-4 text-black/90 font-sans text-lg font-semibold drop-shadow-md">
+                {isMounted && <LanguageSwitcher />}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => {
+                    const element = document.getElementById('why-choose-anamai');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  className="hover:text-black transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
+                >
+                  {t("hero_ourMission")}
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => {
+                    const element = document.getElementById('wellness-journey');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  className="hover:text-black transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
+                >
+                  {t("hero_resources")}
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => {
+                    const element = document.getElementById('faq-section');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  className="hover:text-black transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
+                >
+                  {t("hero_faq")}
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="hover:text-black transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
+                >
+                  <Link href="/doctor/auth">For Doctors</Link>
+                </motion.button>
+              </div>
             </div>
-          </div>
-        </nav>
+          </nav>
+        )}
+
+        {navbarOpacity > 0 && (
+          <nav
+            className="fixed left-1/2 transform -translate-x-1/2 z-50 w-auto max-w-2xl top-2 py-2 px-4"
+            style={{
+              background: `rgba(0, 82, 255, ${0.8 * navbarOpacity})`,
+              backdropFilter: 'blur(8px)',
+              border: `1px solid rgba(0, 82, 255, ${0.3 * navbarOpacity})`,
+              borderRadius: '1rem',
+            }}
+          >
+            <div className="flex justify-between items-center">
+              {/* Logo */}
+              <div className="flex items-center gap-2">
+                <img src="/Logo.png" alt="AnamAI Logo" className="w-10 h-10"/>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="text-white text-xl drop-shadow-lg cursor-pointer transition-all duration-300 hover:text-blue-200 mr-8"
+                >
+                  AnamAI
+                </motion.div>
+              </div>
+
+              {/* Navigation Links */}
+              <div className="flex items-center gap-2 text-white/90 font-sans text-sm font-semibold drop-shadow-md">
+                {isMounted && <LanguageSwitcher />}
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => {
+                    const element = document.getElementById('why-choose-anamai');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  className="hover:text-white cursor-pointer transition-all duration-300 px-3 py-1 rounded-lg hover:bg-white/10"
+                >
+                  {t("hero_ourMission")}
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => {
+                    const element = document.getElementById('wellness-journey');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  className="hover:text-white cursor-pointer transition-all duration-300 px-3 py-1 rounded-lg hover:bg-white/10"
+                >
+                  {t("hero_resources")}
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  onClick={() => {
+                    const element = document.getElementById('faq-section');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  className="hover:text-white cursor-pointer transition-all duration-300 px-3 py-1 rounded-lg hover:bg-white/10"
+                >
+                  {t("hero_faq")}
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                  className="hover:text-white cursor-pointer transition-all duration-300 px-3 py-1 rounded-lg hover:bg-white/10"
+                >
+                  <Link href="/doctor/auth">For Doctors</Link>
+                </motion.button>
+              </div>
+            </div>
+          </nav>
+        )}
 
         {/* Hero Content */}
-        <div className="relative z-10 flex items-center justify-end h-screen">
+        <div className="relative z-10 flex pl-12 items-center justify-start h-screen">
           <div className="px-6 lg:px-12">
             <motion.div 
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="max-w-2xl fade-in text-right"
+              className="max-w-2xl fade-in text-left"
             >
               {/* Hero Heading */}
               <motion.h1 
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="font-serif text-white text-4xl lg:text-6xl font-bold tracking-tight mb-8 drop-shadow-2xl"
+                className="font-serif text-black text-4xl lg:text-6xl font-bold tracking-tight mb-8 drop-shadow-2xl"
               >
                 {t("hero_title")}
               </motion.h1>
@@ -177,7 +252,7 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
                 whileTap={{ scale: 0.95 }}
                 onClick={onBeginJourney}
                 id="fancy"
-                className="btn-sweep group text-white font-sans font-semibold bg-orange-500 px-8 py-4 rounded-lg text-lg hover:shadow-2xl transition-all duration-300 shadow-xl drop-shadow-2xl"
+                className="btn-sweep group text-white font-sans font-semibold bg-blue-500 px-8 py-4 rounded-lg text-lg hover:shadow-2xl transition-all duration-300 shadow-xl drop-shadow-2xl"
               >
                   {t("hero_button")}
                
@@ -191,7 +266,7 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
           <div className="px-6 lg:px-12">
             <div className="flex justify-between items-center">
               <p className="font-sans text-white/80 text-sm font-medium drop-shadow-lg">
-                © 2025 CureZ. All rights reserved.
+                © 2025 AnamAI. All rights reserved.
               </p>
               <p className="font-sans text-white/80 text-sm font-medium drop-shadow-lg">
                 Powered by Gemini for Mental Wellness

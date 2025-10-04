@@ -10,7 +10,7 @@ import { useMessages } from "../hooks/useMessages"
 import { useSession } from "../hooks/useSession"
 import Landing from "./Landing"
 
-export default function CureZ() {
+export default function AnamAI() {
   const auth = useAuth()
   const { messages, setMessages, messagesEndRef } = useMessages()
   const session = useSession(auth.currentUser, setMessages)

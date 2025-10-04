@@ -8,7 +8,7 @@ import { Suspense } from "react"
 import { LanguageProvider } from "@/contexts/LanguageContext"
 
 export const metadata: Metadata = {
-  title: "CureZ - Your AI Mentor",
+  title: "AnamAI - Your AI Mentor",
   description: "A supportive AI mentor for young people seeking mental wellness guidance",
   generator: "v0.app",
 }

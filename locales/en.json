@@ -1,5 +1,5 @@
 {
-  "hero_cureZ": "CureZ",
+  "hero_AnamAi": "AnamAi",
   "hero_ourMission": "Our Mission",
   "hero_resources": "Resources",
   "hero_faq": "FAQ",
@@ -32,7 +32,7 @@
   "content_growthCommunityDesc": "Connect with a supportive community, track your progress, and celebrate milestones on your journey to better mental health.",
 
   "faq_title": "Frequently Asked Questions",
-  "faq_description": "Everything you need to know about CureZ, from AI-powered support to getting started on your mental wellness journey.",
+  "faq_description": "Everything you need to know about AnamAi, from AI-powered support to getting started on your mental wellness journey.",
   "faq_q1": "What is youth mental wellness?",
   "faq_a1": "Youth mental wellness encompasses emotional, psychological, and social well-being during adolescence and young adulthood. It involves managing stress, building resilience, developing healthy relationships, and maintaining positive self-esteem.",
   "faq_q2": "How can AI help with mental wellness?",
@@ -41,17 +41,17 @@
   "faq_a3": "Yes, we prioritize data privacy and security. All conversations are encrypted, and we comply with HIPAA and GDPR standards. Your personal information is never shared without consent, and you have full control over your data.",
   "faq_q4": "How do I get started?",
   "faq_a4": "Simply create an account on our platform, complete a brief assessment, and start exploring personalized wellness plans. Our AI assistant will guide you through the process and connect you with appropriate resources and support.",
-  "faq_q5": "What age groups does CureZ support?",
-  "faq_a5": "CureZ is designed for young people aged 13-25. Our content and AI recommendations are tailored to address the unique mental health challenges faced during adolescence and young adulthood.",
-  "faq_q6": "Can I access CureZ offline?",
+  "faq_q5": "What age groups does AnamAi support?",
+  "faq_a5": "AnamAi is designed for young people aged 13-25. Our content and AI recommendations are tailored to address the unique mental health challenges faced during adolescence and young adulthood.",
+  "faq_q6": "Can I access AnamAi offline?",
   "faq_a6": "While our AI chat requires internet connectivity, you can access mood tracking, journaling, and many resources offline. Premium features like real-time AI conversations require an internet connection.",
 
-  "footer_cureZ": "CureZ",
+  "footer_AnamAi": "AnamAi",
   "footer_description": "Your AI-powered companion for mental wellness. We're committed to supporting young people with personalized, accessible mental health resources and guidance.",
-  "footer_copyright": "© 2025 CureZ. Powered by GenAI for Mental Wellness.",
+  "footer_copyright": "© 2025 AnamAi. Powered by GenAI for Mental Wellness.",
   "footer_madeWith": "Made with Respect and Care for mental wellness",
 
-  "auth_welcome": "Welcome to CureZ",
+  "auth_welcome": "Welcome to AnamAi",
   "auth_welcomeDesc": "Your AI-powered companion for mental wellness",
   "auth_login": "Login",
   "auth_signup": "Sign Up",
@@ -91,7 +91,7 @@
   "header_profile": "Profile Settings",
   "header_dashboard": "Dashboard",
 
-  "sidebar_cureZ": "CureZ",
+  "sidebar_AnamAi": "AnamAi",
   "sidebar_home": "Home",
   "sidebar_aiSession": "AI Session",
   "sidebar_resources": "Resources",

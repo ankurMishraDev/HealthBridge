@@ -26,7 +26,7 @@ export const useAuth = () => {
   const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
 
   useEffect(() => {
-    const savedUser = localStorage.getItem("curez_user");
+    const savedUser = localStorage.getItem("anamai_user");
     if (savedUser) {
       try {
         const user = JSON.parse(savedUser) as User;
@@ -38,7 +38,7 @@ export const useAuth = () => {
         }
       } catch (error) {
         console.error("Error parsing saved user:", error);
-        localStorage.removeItem("curez_user");
+        localStorage.removeItem("anamai_user");
       }
     }
   }, []);
@@ -56,7 +56,7 @@ export const useAuth = () => {
       };
 
       setCurrentUser(updatedUser);
-      localStorage.setItem("curez_user", JSON.stringify(updatedUser));
+      localStorage.setItem("anamai_user", JSON.stringify(updatedUser));
     } catch (error) {
       console.error("Failed to refresh user profile:", error);
     }
@@ -114,7 +114,7 @@ export const useAuth = () => {
 
   const updateCurrentUser = (user: User) => {
     setCurrentUser(user);
-    localStorage.setItem("curez_user", JSON.stringify(user));
+    localStorage.setItem("anamai_user", JSON.stringify(user));
   };
 
   return {
