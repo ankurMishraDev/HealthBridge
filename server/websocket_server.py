@@ -91,9 +91,10 @@ class LiveAPIWebSocketServer:
             if latest_summary:
                 question_prompt = (
                     "Based on the following summary of a user's previous session, "
-                    "generate 2-3 thoughtful, open-ended follow-up questions to help them continue exploring their feelings. "
-                    "The questions should be gentle, encouraging, and in line with the persona of a supportive mentor. "
-                    "Frame them as natural conversation starters.\n\n"
+                    "generate 2-3 thoughtful, open-ended follow-up questions to help them reflect on their health and daily well-being. "
+                    "The questions should encourage the user to share more about their current physical condition, lifestyle habits, and any changes they have noticed. "
+                    "Keep the tone compassionate, respectful, and in line with the persona of a supportive community health guide like Anamai. "
+                    "Focus on exploring general health, self-care practices, and early signs of possible concerns in a natural conversational way.\n\n"            
                     f"PREVIOUS SUMMARY:\n{json.dumps(latest_summary, indent=2)}\n\n"
                     "QUESTIONS:"
                 )

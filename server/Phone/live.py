@@ -44,12 +44,14 @@ def get_websocket_url(host: str) -> str:
     return f"wss://{host}/ws"
 
 
-def generate_twiml(host: str, body_data: Dict[str, Any] | None = None) -> str:
+def generate_twiml(host: str, body_data: Dict[str, Any] | None = None, uid: str | None = None) -> str:
     websocket_url = get_websocket_url(host)
 
     response = VoiceResponse()
     connect = Connect()
     stream = Stream(url=websocket_url)
+    if uid:
+        stream.parameter(name="uid", value=uid)
 
     env = os.getenv("ENV", "local").lower()
     if env == "production":
@@ -132,6 +134,7 @@ async def make_call(request: Request) -> JSONResponse:
 async def get_twiml(request: Request) -> HTMLResponse:
     form_data = await request.form()
     call_sid = form_data.get("CallSid", "")
+    to_number = form_data.get("To")
     body_data = call_body_data.get(call_sid, {})
     if call_sid and body_data:
         del call_body_data[call_sid]
@@ -147,7 +150,7 @@ async def get_twiml(request: Request) -> HTMLResponse:
     if not host:
         raise HTTPException(status_code=400, detail="Unable to determine server host")
 
-    twiml_content = generate_twiml(host, body_data)
+    twiml_content = generate_twiml(host, body_data, uid=to_number)
     return HTMLResponse(content=twiml_content, media_type="application/xml")
 
 

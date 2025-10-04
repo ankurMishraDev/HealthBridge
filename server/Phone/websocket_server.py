@@ -144,11 +144,12 @@ class LiveAPIWebSocketServer:
         if latest_summary:
             question_prompt = (
                 "Based on the following summary of a user's previous session, "
-                "generate 2-3 thoughtful, open-ended follow-up questions to help them continue exploring their feelings. "
-                "The questions should be gentle, encouraging, and in line with the persona of a supportive mentor. "
-                "Frame them as natural conversation starters.\n\n"
-                f"PREVIOUS SUMMARY:\n{json.dumps(latest_summary, indent=2)}\n\n"
-                "QUESTIONS:"
+                    "generate 2-3 thoughtful, open-ended follow-up questions to help them reflect on their health and daily well-being. "
+                    "The questions should encourage the user to share more about their current physical condition, lifestyle habits, and any changes they have noticed. "
+                    "Keep the tone compassionate, respectful, and in line with the persona of a supportive community health guide like Anamai. "
+                    "Focus on exploring general health, self-care practices, and early signs of possible concerns in a natural conversational way.\n\n"            
+                    f"PREVIOUS SUMMARY:\n{json.dumps(latest_summary, indent=2)}\n\n"
+                    "QUESTIONS:"
             )
 
             try:
@@ -514,23 +515,64 @@ class LiveAPIWebSocketServer:
         # --- UPDATED SCHEMA: More Medical Background ---
         # This schema focuses on capturing objective, user-reported clinical information.
         schema_hint = {
-            "session_id": session_handle or "",
-            "generated_at_utc": datetime.now(timezone.utc).isoformat(),
-            "disclaimer": "This is an AI-generated summary based on user conversation and is NOT a medical record.",
-            "summary_of_interaction": "",  # A brief, top-level summary of the conversation's purpose and outcome.
-            "reported_symptoms": [],  # List all symptoms mentioned by the user (e.g., "Fever", "Persistent cough").
-            "symptom_details": "",  # A descriptive paragraph detailing symptom onset, duration, severity, and triggers as described by the user.
-            "mentioned_medical_history": [],  # Any past conditions or surgeries the user mentioned (e.g., "Diabetes since 2010").
-            "mentioned_medications": [],  # Any medications the user reported taking.
-            "physical_assessment_notes": "",  # Notes on any physical observations the user describes (e.g., "mentioned a rash on their arm").
-            "triage_recommendation": "",  # The final recommendation given by the bot (e.g., "Advised to see a doctor immediately").
-            "risk_flags": {
-                "mentions_self_harm": False,
-                "mentions_harming_others": False,
-                "mentions_abuse_or_unsafe": False,
-                "is_urgent_medical_situation": False  # Flag for symptoms like chest pain, difficulty breathing, etc.
-            }
+        "session_id": session_handle or "",
+        "generated_at_utc": datetime.now(timezone.utc).isoformat(),
+        "disclaimer": "This is an AI-generated summary based on user conversation and is NOT a medical record.",
+        "summary_of_interaction": "",  # Brief, top-level purpose and outcome.
+        "reported_symptoms": [],       # e.g., ["Fever", "Persistent cough"]
+        "symptom_details": "",         # Onset, duration, severity, triggers (as described by user).
+        "mentioned_medical_history": [],   # e.g., ["Diabetes since 2010"]
+        "mentioned_medications": [],       # e.g., ["Paracetamol 500mg (self-reported)"]
+        "physical_assessment_notes": "",   # e.g., "mentioned a rash on left forearm"
+        "find_main_problems": [],          # Key problems/issues extracted from the conversation.
+        "level_of_pain": {                 # Overall pain level (user-described)
+            "score": -1,                   # Range: -1 (mild) to 5 (highest), per your spec
+            "body_site": "",               # e.g., "right ankle"
+            "character": "",               # e.g., "sharp", "dull", "burning"
+            "aggravating_relieving_factors": ""  # e.g., "worse on walking, better with rest"
+        },
+        "lifestyle_factors": {
+        "smoking": False,
+        "alcohol_use": False,
+        "diet_type": "",                 # "Vegetarian", "Non-vegetarian", "Mixed"
+        "water_intake": "",              # "Adequate", "Low"
+        "sleep_hours": "",               # "Good", "Poor", etc.
+        "physical_activity_level": ""    # "Low", "Moderate", "High"
+        },
+        "problems_concern": "",            # User-described incidents/causes (e.g., "fell from bike, leg hurt")
+        "AI_based_conclusion": "",         # Tentative, non-diagnostic summary of likely issue(s) with uncertainty.
+        "solution": "",                    # Advice provided by AI during session (self-care, hydration, rest, etc.)
+        "triage_recommendation": "",       # Final recommendation (e.g., "Go to hospital now", "See a doctor in 24–48h")
+        "suggested_doctors": [],           # e.g., ["General Physician", "Orthopedic Surgeon", "Pediatrician"]
+        "risk_flags": {
+            "is_urgent_medical_situation": False  # True if red-flag symptoms present (chest pain, dyspnea, etc.)
         }
+    }
+
+
+        # --- UPDATED PROMPT: Aligned with Medical Schema ---
+        # This prompt instructs the AI to act as a clinical information extractor, not a diagnostician.
+        user_prompt = (
+    "You are a clinical information extractor assisting a user from a RURAL area. "
+    "Your job is to EXTRACT and ORGANIZE medical information from the transcript into the provided JSON schema. "
+    "DO NOT provide a diagnosis or medical opinion. Be objective and only use information explicitly present in the transcript. "
+    "For 'symptom_details', capture onset, duration, severity, and triggers as stated by the user. "
+    "For 'find_main_problems', list the key problems the user is facing in concise bullet-like phrases. "
+    "For 'level_of_pain', set 'score' to the user-stated level on a scale from -1 (mild pain) to 5 (highest pain); "
+    "if a specific number is not stated, infer conservatively from descriptors (e.g., 'mild', 'severe') and note the body site and character. "
+    "In 'problems_concern', summarize any incidents or causes the user mentions (e.g., fall, burn, injury). "
+    "In 'AI_based_conclusion', provide a cautious, non-diagnostic synthesis of what the AI inferred from symptoms (use phrases like 'may be consistent with', 'could suggest', and state uncertainty). "
+    "In 'solution', record only the advice the AI actually provided during the conversation (e.g., rest, fluids, cold compress), not new advice. "
+    "In 'triage_recommendation', record the final advice about urgency and where to seek care. "
+    "In 'suggested_doctors', list any doctor types/specialties the AI suggested (e.g., 'General Physician', 'Orthopedic Surgeon'). "
+    "Set 'risk_flags.is_urgent_medical_situation' to true ONLY if the transcript contains life-threatening red flags "
+    "(e.g., chest pain/pressure, difficulty breathing, severe bleeding, sudden confusion/fainting, stroke signs). "
+    "Return ONLY the completed JSON object with fields exactly as in the schema (no extra commentary)."
+    "\n\n"
+    f"PREVIOUS_SUMMARY:\n{previous_summary}\n\n"
+    f"JSON_SCHEMA_EXAMPLE:\n{json.dumps(schema_hint, ensure_ascii=False, indent=2)}\n\n"
+    f"TRANSCRIPT:\n{flat_transcript}"
+    )
 
         # --- UPDATED PROMPT: Aligned with Medical Schema ---
         # This prompt instructs the AI to act as a clinical information extractor, not a diagnostician.

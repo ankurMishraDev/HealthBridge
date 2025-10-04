@@ -139,19 +139,19 @@ async def generate_dynamic_system_instruction(uid: Optional[str]) -> str:
             logger.error("Error generating dynamic follow-up questions: %s", exc)
             generated_questions = "How have you been feeling since we last talked?"
 
-    greeting = f"Start the conversation by warmly welcoming the user back. Greet them by name: '{user_name}'."
+    greeting = f"Start the conversation by warmly welcoming the user back. Greet them by name: '{user_name}'. After the greeting, wait for the user to respond."
 
     dynamic_instruction = f"{SYSTEM_INSTRUCTION}\n\n--- Conversation Context ---\n{greeting}\n"
 
     if generated_questions:
         dynamic_instruction += (
-            "After the greeting, gently ask one of the following questions to help them open up, "
+            "After the user responds to your greeting, gently ask one of the following questions to help them open up, "
             "based on their previous conversation. Choose the one that feels most natural.\n"
             f"{generated_questions}\n"
         )
     else:
         dynamic_instruction += (
-            "After the greeting, ask a general open-ended question like 'What's been on your mind lately?' "
+            "After the user responds to your greeting, ask a general open-ended question like 'What's been on your mind lately?' "
             "or 'How have things been for you?'.\n"
         )
 
@@ -465,9 +465,7 @@ async def run_bot(
 
     llm.register_function("retrieve_mental_health_resources", _rag_handler)
 
-    context = OpenAILLMContext(
-        [{"role": "user", "content": "Say hello."}],
-    )
+    context = OpenAILLMContext()
     context_aggregator = llm.create_context_aggregator(context)
 
     summary_sent = False
