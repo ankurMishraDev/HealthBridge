@@ -112,13 +112,7 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
           </div>
         </div>
         <div>
-          <label className="text-sm font-medium">{t("profile_email")}</label>
-          <Input
-            value={currentUser?.email || ""}
-            className="mt-1"
-            readOnly
-            placeholder={t("profile_noEmail")}
-          />
+         
         </div>
         {!isEditing ? (
           <Button onClick={handleEdit} className="w-full">

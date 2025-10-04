@@ -1,73 +1,65 @@
 "use client"
 
-
-import { useEffect } from "react"
-import { Auth } from "../components/Auth"
+import { useState, useEffect } from "react"
 import { Dashboard } from "../components/Dashboard"
 import { Session } from "../components/Session"
 import { useAuth } from "../hooks/useAuth"
 import { useMessages } from "../hooks/useMessages"
 import { useSession } from "../hooks/useSession"
 import Landing from "./Landing"
+import { useRouter } from "next/navigation"
+import UserAuthPage from "./user/auth/page"
 
 export default function AnamAI() {
-  const auth = useAuth()
+  const { currentUser, loading, handleLogout, setCurrentUser } = useAuth()
   const { messages, setMessages, messagesEndRef } = useMessages()
-  const session = useSession(auth.currentUser, setMessages)
+  const session = useSession(currentUser, setMessages)
+  const [currentView, setCurrentView] = useState("landing")
+  const router = useRouter()
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search)
-    const view = urlParams.get("view")
-    if (view === "auth") {
-      auth.setCurrentView("auth")
+    if (currentUser) {
+      setCurrentView("dashboard")
+    } else {
+      setCurrentView("landing")
     }
-  }, [])
+  }, [currentUser])
 
   useEffect(() => {
-    if (auth.currentView === "session" && !session.audioClientRef.current) {
+    if (currentView === "session" && !session.audioClientRef.current) {
       session.initializeAudioClient()
     }
-  }, [auth.currentView, session])
+  }, [currentView, session])
 
-  const handleLogout = () => {
-    auth.handleLogout()
+  const handleLogoutAndEndSession = () => {
+    handleLogout()
     if (session.audioClientRef.current) {
       session.audioClientRef.current.close()
     }
   }
 
-  if (auth.currentView === "auth") {
-    return (
-      <Auth
-        authMode={auth.authMode}
-        setAuthMode={auth.setAuthMode}
-        signupForm={auth.signupForm}
-        setSignupForm={auth.setSignupForm}
-        otp={auth.otp}
-        setOtp={auth.setOtp}
-        handleSendOtp={auth.handleSendOtp}
-        handleVerifyOtp={auth.handleVerifyOtp}
-        isSendingOtp={auth.isSendingOtp}
-        isVerifyingOtp={auth.isVerifyingOtp}
-        confirmationResult={auth.confirmationResult}
-      />
-    );
+  if (loading) {
+    return <div>Loading...</div>
   }
 
-  if (auth.currentView === "dashboard") {
+  if (currentView === "auth") {
+    return <UserAuthPage setCurrentUser={setCurrentUser} />
+  }
+
+  if (currentView === "dashboard") {
     return (
       <Dashboard
-        currentUser={auth.currentUser}
-        handleLogout={handleLogout}
+        currentUser={currentUser}
+        handleLogout={handleLogoutAndEndSession}
         dashboardPage={session.dashboardPage}
         setDashboardPage={session.setDashboardPage}
-        setCurrentView={auth.setCurrentView}
-        onUserUpdate={auth.updateCurrentUser}
+        setCurrentView={setCurrentView}
+        onUserUpdate={setCurrentUser}
       />
     )
   }
 
-  if (auth.currentView === "session") {
+  if (currentView === "session") {
     return (
       <Session
         messages={messages}
@@ -80,18 +72,14 @@ export default function AnamAI() {
         stopRecording={session.stopRecording}
         endSession={() => {
           session.endSession()
-          auth.setCurrentView("dashboard")
+          setCurrentView("dashboard")
         }}
-        setCurrentView={auth.setCurrentView}
+        setCurrentView={setCurrentView}
         sendTextMessage={session.sendTextMessage}
         setInputMode={session.setInputMode}
       />
     )
   }
 
-  if (auth.currentView === "landing") {
-    return <Landing onBeginJourney={() => auth.setCurrentView("auth")} />
-  }
-
-  return null;
+  return <Landing onBeginJourney={() => setCurrentView("auth")} />
 }

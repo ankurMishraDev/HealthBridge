@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Doctor, DashboardPage, ViewType } from "../../lib/types";
-import { useTranslation } from "@/hooks/useTranslation";
 import { DoctorSidebar } from "./DoctorSidebar";
 import { DashboardHeader } from "../DashboardHeader";
 
@@ -21,8 +20,6 @@ export const DoctorDashboard: React.FC<DoctorDashboardProps> = ({
   setCurrentView,
   onDoctorUpdate,
 }) => {
-  const { t } = useTranslation();
-
   return (
     <div className="min-h-screen flex relative">
       <DoctorSidebar
@@ -41,29 +38,29 @@ export const DoctorDashboard: React.FC<DoctorDashboardProps> = ({
         {/* Dashboard Content */}
         {dashboardPage === "home" && (
           <div>
-            <h1 className="text-2xl font-bold">{t("doctor_dashboard_home_title")}</h1>
-            <p>{t("doctor_dashboard_home_description")}</p>
+            <h1 className="text-2xl font-bold">Home</h1>
+            <p>Welcome to your dashboard.</p>
           </div>
         )}
 
         {dashboardPage === "patients" && (
           <div>
-            <h1 className="text-2xl font-bold">{t("doctor_dashboard_patients_title")}</h1>
-            <p>{t("doctor_dashboard_patients_description")}</p>
+            <h1 className="text-2xl font-bold">Patients</h1>
+            <p>Manage your patients here.</p>
           </div>
         )}
 
         {dashboardPage === "appointments" && (
           <div>
-            <h1 className="text-2xl font-bold">{t("doctor_dashboard_appointments_title")}</h1>
-            <p>{t("doctor_dashboard_appointments_description")}</p>
+            <h1 className="text-2xl font-bold">Appointments</h1>
+            <p>Manage your appointments here.</p>
           </div>
         )}
 
         {dashboardPage === "profile" && (
           <div>
-            <h1 className="text-2xl font-bold">{t("doctor_dashboard_profile_title")}</h1>
-            <p>{t("doctor_dashboard_profile_description")}</p>
+            <h1 className="text-2xl font-bold">Profile</h1>
+            <p>Manage your profile here.</p>
           </div>
         )}
       </main>

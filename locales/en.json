@@ -1,10 +1,10 @@
 {
   "hero_AnamAi": "AnamAi",
-  "hero_ourMission": "Our Mission",
-  "hero_resources": "Resources",
+  "hero_ourMission": "Services",
+  "hero_resources": "Simple Workflow",
   "hero_faq": "FAQ",
-  "hero_title": "Your AI-Powered Guide to Mental Wellness",
-  "hero_button": "Start Your Wellness Journey",
+  "hero_title": "AI-Powered medical assistant for your good health",
+  "hero_button": "Get AI Assistance Now",
 
   "content_whyChoose": "Why Choose HealthBridge?",
   "content_experience": "Experience the high quality medical assistance with our AI-powered platform designed specifically for rural area people.",
@@ -91,7 +91,7 @@
   "header_profile": "Profile Settings",
   "header_dashboard": "Dashboard",
 
-  "sidebar_AnamAi": "AnamAi",
+  "sidebar_anamai": "AnamAi",
   "sidebar_home": "Home",
   "sidebar_aiSession": "AI Session",
   "sidebar_resources": "Resources",

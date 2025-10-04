@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -6,6 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {   MessageCircle,
   Heart,
   Brain,
@@ -41,6 +43,43 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
   positiveTip,
 }) => {
   const { t } = useTranslation();
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isCalling, setIsCalling] = useState(false);
+  const [callStatus, setCallStatus] = useState("");
+
+  const handleMakeCall = async () => {
+    if (!phoneNumber) {
+      setCallStatus("Please enter a phone number.");
+      return;
+    }
+    setIsCalling(true);
+    setCallStatus("Initiating call...");
+
+    try {
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:7860';
+      const response = await fetch(`${apiBaseUrl}/make-call`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ to_number: phoneNumber }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setCallStatus(`Call initiated successfully! SID: ${data.call_sid}`);
+      } else {
+        setCallStatus(`Error: ${data.detail || 'Failed to initiate call.'}`);
+      }
+    } catch (error) {
+      console.error('Error making call:', error);
+      setCallStatus('An error occurred. Please check the console and server logs.');
+    } finally {
+      setIsCalling(false);
+    }
+  };
+
   const formatHours = (hours: number | null | undefined) => {
     if (hours === null || hours === undefined || Number.isNaN(hours)) {
       return t("home_notAvailable");
@@ -350,6 +389,25 @@ export const HomeSection: React.FC<HomeSectionProps> = ({
               <p className="text-sm text-muted-foreground">
                 "{currentTip}"
               </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Call AnamAI</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col gap-2">
+                <Input
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="+1234567890"
+                />
+                <Button onClick={handleMakeCall} disabled={isCalling}>
+                  {isCalling ? "Calling..." : "Call Now"}
+                </Button>
+              </div>
+              {callStatus && <p className="mt-2 text-sm text-gray-600">{callStatus}</p>}
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-primary/10 to-secondary/10 border-primary/20">

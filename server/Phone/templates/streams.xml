@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Connect>
-    <Stream url="wss://23b8f2f36964.ngrok-free.app/ws"></Stream>
+    <Stream url="wss://finest-computers-emacs-assess.trycloudflare.com/ws"></Stream>
   </Connect>
   <Pause length="40"/>
 </Response>

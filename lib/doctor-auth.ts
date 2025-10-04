@@ -88,7 +88,7 @@ export const signup = async (formData: SignupFormData): Promise<FirebaseUser> =>
 
     await syncDoctorProfile(doctor);
 
-    window.location.href = `/doctor/onboarding?id=${firebaseUser.uid}`;
+    localStorage.setItem("curez_doctor", JSON.stringify(doctor));
 
     return firebaseUser;
   } catch (error: any) {
@@ -103,7 +103,27 @@ export const login = async (email: string, pass: string): Promise<FirebaseUser> 
     const userCredential = await signInWithEmailAndPassword(auth, email, pass);
     const firebaseUser = userCredential.user;
 
-    window.location.href = "/doctor/dashboard";
+    const doctor: Doctor = {
+      doctor_id: firebaseUser.uid,
+      email: firebaseUser.email!,
+      name: "",
+      age: 0,
+      gender: "",
+      expertise: "",
+      qualification: "",
+      experience: 0,
+      languages: [],
+      profile_photo: "",
+      availability_time: "",
+      medicalLicenseCertificate: "",
+      clinicAddress: "",
+      phoneNumber: "",
+      preferredLanguages: [],
+      averageRating: 0,
+      reviewStars: [],
+    };
+
+    localStorage.setItem("curez_doctor", JSON.stringify(doctor));
 
     return firebaseUser;
   } catch (error: any) {

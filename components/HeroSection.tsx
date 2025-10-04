@@ -14,6 +14,48 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
   const [navbarBg, setNavbarBg] = useState("bg-transparent");
   const [navbarOpacity, setNavbarOpacity] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isCalling, setIsCalling] = useState(false);
+  const [callStatus, setCallStatus] = useState("");
+  const [showNumberInput, setShowNumberInput] = useState(false);
+
+  const handleMakeCall = async () => {
+    if (!showNumberInput) {
+      setShowNumberInput(true);
+      return;
+    }
+
+    if (!phoneNumber) {
+      setCallStatus("Please enter a phone number.");
+      return;
+    }
+    setIsCalling(true);
+    setCallStatus("Initiating call...");
+
+    try {
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:7860';
+      const response = await fetch(`${apiBaseUrl}/make-call`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ to_number: phoneNumber }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setCallStatus(`Call initiated successfully! SID: ${data.call_sid}`);
+      } else {
+        setCallStatus(`Error: ${data.detail || 'Failed to initiate call.'}`);
+      }
+    } catch (error) {
+      console.error('Error making call:', error);
+      setCallStatus('An error occurred. Please check the console and server logs.');
+    } finally {
+      setIsCalling(false);
+    }
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -78,7 +120,8 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
                   }}
                   className="text-black text-5xl drop-shadow-lg pr-6 cursor-pointer transition-all duration-300 hover:text-blue-200"
                 >
-                  AnamAI
+                  <span style={{ color: '#000000' }}>anam</span>
+  <span style={{ color: '#2B7FFF' }}>ai</span>
                 </motion.div>
               </div>
 
@@ -131,10 +174,31 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 300 }}
+                  onClick={handleMakeCall}
                   className="hover:text-black transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
                 >
-                  <Link href="/doctor/auth">For Doctors</Link>
+                  Call Anamai
                 </motion.button>
+                {showNumberInput && (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="tel"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      placeholder="+1234567890"
+                      className="bg-white/90 text-black px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"
+                    />
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={handleMakeCall}
+                      disabled={isCalling}
+                      className="bg-green-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-green-600 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    >
+                      {isCalling ? 'Calling...' : 'Call'}
+                    </motion.button>
+                  </div>
+                )}
               </div>
             </div>
           </nav>
@@ -211,14 +275,6 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
                 >
                   {t("hero_faq")}
                 </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="hover:text-white cursor-pointer transition-all duration-300 px-3 py-1 rounded-lg hover:bg-white/10"
-                >
-                  <Link href="/doctor/auth">For Doctors</Link>
-                </motion.button>
               </div>
             </div>
           </nav>
@@ -243,20 +299,23 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
                 {t("hero_title")}
               </motion.h1>
 
-              {/* Call to Action Button */}
-              <motion.button
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={onBeginJourney}
-                id="fancy"
-                className="btn-sweep group text-white font-sans font-semibold bg-blue-500 px-8 py-4 rounded-lg text-lg hover:shadow-2xl transition-all duration-300 shadow-xl drop-shadow-2xl"
-              >
-                  {t("hero_button")}
-               
-              </motion.button>
+              {/* Call to Action Buttons */}
+              <div className="flex flex-col items-start gap-4">
+                <div className="flex items-center gap-4">
+                  <motion.button
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={onBeginJourney}
+                    id="fancy"
+                    className="btn-sweep group text-white font-sans font-semibold bg-blue-500 px-8 py-4 rounded-lg text-lg hover:shadow-2xl transition-all duration-300 shadow-xl drop-shadow-2xl"
+                  >
+                    {t("hero_button")}
+                  </motion.button>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>

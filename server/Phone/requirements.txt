@@ -1,0 +1,7 @@
+pipecat-ai[cartesia,silero,deepgram,google]
+fastapi
+uvicorn
+python-dotenv
+loguru
+google-genai
+twilio

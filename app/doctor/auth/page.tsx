@@ -30,21 +30,21 @@ export default function DoctorAuthPage() {
 
   const handleSignup = async () => {
     try {
-      await signup({ email, name, age, gender, password })
-      setIsSignedUp(true)
+      const user = await signup({ email, name, age, gender, password });
+      router.push(`/doctor/onboarding?id=${user.uid}`);
     } catch (error) {
-      setError((error as Error).message)
+      setError((error as Error).message);
     }
-  }
+  };
 
   const handleLogin = async () => {
     try {
-      await login(email, password)
-      router.push("/doctor/dashboard")
+      await login(email, password);
+      router.push("/doctor/dashboard");
     } catch (error) {
-      setError((error as Error).message)
+      setError((error as Error).message);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-card to-background flex items-center justify-center p-4">

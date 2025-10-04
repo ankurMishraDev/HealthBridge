@@ -1,6 +1,4 @@
 import { User, DashboardPage } from "../lib/types";
-import { useTranslation } from "@/hooks/useTranslation";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 
 interface DashboardHeaderProps {
   dashboardPage: DashboardPage;
@@ -8,31 +6,31 @@ interface DashboardHeaderProps {
   currentUser: User | null;
 }
 
-const getHeaderDetails = (page: DashboardPage, name: string, t: (key: string, params?: any) => string) => {
+const getHeaderDetails = (page: DashboardPage, name: string) => {
   switch (page) {
     case "home":
       return {
-        title: t("header_welcome", { name }),
+        title: `Welcome, ${name}`,
         // description: "Here's your wellness overview.",
       };
     case "sessions":
       return {
-        title: t("header_session"),
+        title: "AI Session",
         // description: "Connect with your AI mentor for personalized support and guidance.",
       };
     case "resources":
       return {
-        title: t("header_resources"),
+        title: "Resources",
         // description: "Explore exercises and tips to support your mental well-being.",
       };
     case "profile":
       return {
-        title: t("header_profile"),
+        title: "Profile",
         // description: "Manage your personal information.",
       };
     default:
       return {
-        title: t("header_dashboard"),
+        title: "Dashboard",
         description: "",
       };
   }
@@ -43,11 +41,9 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   currentUserName,
   currentUser,
 }) => {
-  const { t, setLanguage, language } = useTranslation();
   const headerDetails = getHeaderDetails(
     dashboardPage,
-    currentUserName || "User",
-    t
+    currentUserName || "User"
   );
 
   return (
@@ -60,7 +56,6 @@ export const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           {headerDetails.description}
         </p>
       </div>
-      <LanguageSwitcher />
     </header>
   );
 };

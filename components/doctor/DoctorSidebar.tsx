@@ -11,7 +11,6 @@ import {
   ChevronLeft,
 } from "lucide-react";
 import { DashboardPage } from "../../lib/types";
-import { useTranslation } from "@/hooks/useTranslation";
 
 interface DoctorSidebarProps {
   dashboardPage: DashboardPage;
@@ -26,15 +25,14 @@ export const DoctorSidebar: React.FC<DoctorSidebarProps> = ({
   handleLogout,
   onNavigateToLanding,
 }) => {
-  const { t } = useTranslation();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDesktopCollapsed, setIsDesktopCollapsed] = useState(false);
 
   const navItems = [
-    { id: "home", label: t("sidebar_home"), icon: Home },
-    { id: "patients", label: t("sidebar_patients"), icon: Users },
-    { id: "appointments", label: t("sidebar_appointments"), icon: Calendar },
-    { id: "profile", label: t("sidebar_profile"), icon: UserIcon },
+    { id: "home", label: "Home", icon: Home },
+    { id: "patients", label: "Patients", icon: Users },
+    { id: "appointments", label: "Appointments", icon: Calendar },
+    { id: "profile", label: "Profile", icon: UserIcon },
   ];
 
   const sidebarContent = (isCollapsed: boolean) => (
@@ -43,12 +41,15 @@ export const DoctorSidebar: React.FC<DoctorSidebarProps> = ({
         <img src="/Logo.png" alt="AnamAI Logo" className="h-16 w-16" />
         {!isCollapsed && (
           <div>
-            <h1 
-              className="text-2xl font-bold text-foreground cursor-pointer hover:text-primary transition-colors"
-              onClick={onNavigateToLanding}
-            >
-              {t("sidebar_anamai_doctor")}
-            </h1>
+            <h1
+  className="text-2xl font-bold cursor-pointer transition-colors hover:text-primary"
+  onClick={onNavigateToLanding}
+  style={{ fontFamily: "Gramond, sans-serif" }}
+>
+  <span style={{ color: '#000000' }}>anam</span>
+  <span style={{ color: '#2B7FFF' }}>ai</span>
+</h1>
+
           </div>
         )}
       </div>
@@ -71,15 +72,12 @@ export const DoctorSidebar: React.FC<DoctorSidebarProps> = ({
       </nav>
       <Button
         variant="ghost"
-        onClick={() => {
-          handleLogout();
-          window.location.href = "/";
-        }}
+        onClick={handleLogout}
         className={`w-full justify-start text-lg h-12 mt-auto ${isCollapsed ? 'justify-center' : ''}`}
-        title={isCollapsed ? t("sidebar_logout") : undefined}
+        title={isCollapsed ? "Logout" : undefined}
       >
         <LogOut className={`h-5 w-5 ${isCollapsed ? '' : 'mr-3'}`} />
-        {!isCollapsed && t("sidebar_logout")}
+        {!isCollapsed && "Logout"}
       </Button>
     </div>
   );

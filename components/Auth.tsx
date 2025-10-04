@@ -70,7 +70,6 @@ export const Auth: React.FC<AuthProps> = ({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-card to-background flex items-center justify-center p-4">
-      <div id="recaptcha-container" />
       <Card className="w-full max-w-md shadow-xl border-0 bg-card/80 backdrop-blur-sm">
         <CardHeader className="text-center space-y-4">
           <div className="absolute top-4 left-4">
@@ -128,6 +127,11 @@ export const Auth: React.FC<AuthProps> = ({
                   >
                     {isSendingOtp ? t("auth_sendingOtp") : t("auth_sendOtp")}
                   </Button>
+                  <Link href="/doctor/auth" className="w-full">
+                    <Button variant="outline" className="w-full h-12 text-lg font-semibold">
+                      Doctor Login
+                    </Button>
+                  </Link>
                 </>
               ) : (
                 <div className="space-y-4">
