@@ -4,10 +4,13 @@ import { createContext, useState, useEffect, ReactNode, FC } from 'react';
 interface LanguageContextType {
   language: string;
   setLanguage: (language: string) => void;
-  translations: any;
+  translations: Record<string, string>;
+  fallbackTranslations: Record<string, string>;
 }
 
-export const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+export const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined
+);
 
 export const LanguageProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState(() => {
@@ -16,23 +19,48 @@ export const LanguageProvider: FC<{ children: ReactNode }> = ({ children }) => {
     }
     return 'en';
   });
-  const [translations, setTranslations] = useState({});
+  const [translations, setTranslations] = useState<Record<string, string>>({});
+  const [fallbackTranslations, setFallbackTranslations] = useState<
+    Record<string, string>
+  >({});
+
+  useEffect(() => {
+    const loadFallbackTranslations = async () => {
+      try {
+        const enTranslations = await import(`../locales/en.json`);
+        setFallbackTranslations(enTranslations.default);
+        setTranslations(enTranslations.default);
+      } catch (error) {
+        console.error('Could not load default English translations', error);
+      }
+    };
+
+    loadFallbackTranslations();
+  }, []);
 
   useEffect(() => {
     const loadTranslations = async () => {
+      if (Object.keys(fallbackTranslations).length === 0) {
+        return;
+      }
+
+      if (language === 'en') {
+        setTranslations(fallbackTranslations);
+        return;
+      }
+
       try {
         const newTranslations = await import(`../locales/${language}.json`);
         setTranslations(newTranslations.default);
       } catch (error) {
         console.error(`Could not load translations for ${language}`, error);
         // Fallback to English if the selected language file is not found
-        const enTranslations = await import(`../locales/en.json`);
-        setTranslations(enTranslations.default);
+        setTranslations(fallbackTranslations);
       }
     };
 
     loadTranslations();
-  }, [language]);
+  }, [language, fallbackTranslations]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -44,6 +72,7 @@ export const LanguageProvider: FC<{ children: ReactNode }> = ({ children }) => {
     language,
     setLanguage,
     translations,
+    fallbackTranslations,
   };
 
   return (

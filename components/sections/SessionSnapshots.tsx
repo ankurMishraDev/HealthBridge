@@ -18,7 +18,7 @@ export const SessionSnapshots: React.FC<SessionSnapshotsProps> = ({
   if (!snapshots || snapshots.length === 0) {
     return (
       <p className="text-sm text-muted-foreground">
-        {t("sessions_noHistory")}
+        {t("sessions_completeForHistory")}
       </p>
     );
   }
