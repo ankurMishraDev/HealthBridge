@@ -174,31 +174,11 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 300 }}
-                  onClick={handleMakeCall}
-                  className="hover:text-black transition-all duration-300 px-4 py-2 rounded-lg hover:bg-white/10"
+                  onClick={onBeginJourney}
+                  className="btn-sweep group text-white font-sans font-semibold bg-blue-500 px-4 py-2 rounded-lg text-lg hover:shadow-2xl transition-all duration-300 shadow-xl drop-shadow-2xl"
                 >
-                  Call Anamai
+                  {t("hero_button")}
                 </motion.button>
-                {showNumberInput && (
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="tel"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      placeholder="+1234567890"
-                      className="bg-white/90 text-black px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"
-                    />
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={handleMakeCall}
-                      disabled={isCalling}
-                      className="bg-green-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-green-600 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                    >
-                      {isCalling ? 'Calling...' : 'Call'}
-                    </motion.button>
-                  </div>
-                )}
               </div>
             </div>
           </nav>
@@ -303,18 +283,45 @@ export default function Home({ onBeginJourney }: HeroSectionProps) {
               <div className="flex flex-col items-start gap-4">
                 <div className="flex items-center gap-4">
                   <motion.button
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={onBeginJourney}
-                    id="fancy"
-                    className="btn-sweep group text-white font-sans font-semibold bg-blue-500 px-8 py-4 rounded-lg text-lg hover:shadow-2xl transition-all duration-300 shadow-xl drop-shadow-2xl"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleMakeCall}
+                  id="fancy"
+                  className="btn-sweep group text-white font-sans font-semibold bg-blue-500 px-[2.3rem] py-[1.15rem] rounded-lg text-[1.5rem] hover:shadow-2xl transition-all duration-300 shadow-xl drop-shadow-2xl"
                   >
-                    {t("hero_button")}
+                  Call <span style={{ color: 'white' }}>anam</span>
+          <span style={{ color: 'yellow' }}>ai</span>
                   </motion.button>
                 </div>
+                {showNumberInput && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                    className="flex items-center gap-2 bg-black/20 p-2 rounded-lg"
+                  >
+                    <input
+                      type="tel"
+                      value={phoneNumber}
+                      onChange={(e) => setPhoneNumber(e.target.value)}
+                      placeholder="+1234567890"
+                      className="bg-white/90 text-black px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"
+                    />
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={handleMakeCall}
+                      disabled={isCalling}
+                      className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-600 transition-all duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    >
+                      {isCalling ? 'Calling...' : 'Call'}
+                    </motion.button>
+                  </motion.div>
+                )}
+                {callStatus && <p className="mt-2 text-sm text-white bg-black/50 px-3 py-1 rounded">{callStatus}</p>}
               </div>
             </motion.div>
           </div>

@@ -130,6 +130,26 @@ async def make_call(request: Request) -> JSONResponse:
     return JSONResponse({"call_sid": call_sid, "status": "call_initiated", "to_number": to_number})
 
 
+@app.post("/inbound-call")
+async def inbound_call(request: Request) -> HTMLResponse:
+    """
+    Endpoint to handle inbound calls from Twilio.
+    """
+    try:
+        form_data = await request.form()
+        caller_id = form_data.get("From")
+        
+        host = request.headers.get("host")
+        if not host:
+            raise HTTPException(status_code=400, detail="Unable to determine server host")
+
+        twiml_content = generate_twiml(host, uid=caller_id)
+        return HTMLResponse(content=twiml_content, media_type="application/xml")
+    except Exception as e:
+        logger.error(f"Error handling inbound call: {e}")
+        raise HTTPException(status_code=500, detail="Error handling inbound call")
+
+
 @app.post("/twiml")
 async def get_twiml(request: Request) -> HTMLResponse:
     form_data = await request.form()

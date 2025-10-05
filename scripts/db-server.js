@@ -98,19 +98,51 @@ app.post("/login", async (req, res) => {
 })
 
 app.post("/save-summary", async (req, res) => {
-  const { uid, summary } = req.body
+  const { uid, summary } = req.body;
   if (!uid || !summary) {
-    return res.status(400).send({ error: "Missing uid or summary" })
+    return res.status(400).send({ error: "Missing uid or summary" });
   }
 
   try {
-    const userRef = db.collection("users").doc(uid)
-    await userRef.set({ latestSummary: summary }, { merge: true })
-    res.status(200).send({ message: "Summary saved successfully" })
+    const userRef = db.collection("users").doc(uid);
+    const snapshotWithTimestamp = {
+      ...summary,
+      // Add a server-side timestamp to ensure uniqueness
+      savedAt: admin.firestore.FieldValue.serverTimestamp(),
+    };
+
+    // Use arrayUnion to add the new summary to the 'snapshots' array
+    await userRef.update({
+      snapshots: admin.firestore.FieldValue.arrayUnion(snapshotWithTimestamp),
+      latestSummary: summary,
+    });
+
+    res.status(200).send({
+      message: "Summary appended successfully to snapshots array and latestSummary updated",
+    });
   } catch (error) {
-    res.status(500).send({ error: error.message })
+    // If the document or snapshots field doesn't exist, create it
+    if (error.code === 5) { // 5 = NOT_FOUND
+      try {
+        const userRef = db.collection("users").doc(uid);
+        const snapshotWithTimestamp = {
+          ...summary,
+          savedAt: admin.firestore.FieldValue.serverTimestamp(),
+        };
+        await userRef.set({
+          snapshots: [snapshotWithTimestamp],
+          latestSummary: summary
+        }, { merge: true });
+        return res.status(200).send({
+          message: "Snapshots array created and summary appended successfully",
+        });
+      } catch (e) {
+        return res.status(500).send({ error: e.message });
+      }
+    }
+    res.status(500).send({ error: error.message });
   }
-})
+});
 
 app.post("/save-name", async (req, res) => {
   const { uid, name } = req.body
@@ -163,6 +195,27 @@ app.get("/get-summary/:uid", async (req, res) => {
     res.status(500).send({ error: error.message })
   }
 })
+
+app.get("/get-snapshots/:uid", async (req, res) => {
+  const { uid } = req.params;
+  try {
+    const userRef = db.collection("users").doc(uid);
+    const doc = await userRef.get();
+
+    if (!doc.exists || !doc.data().snapshots) {
+      return res.status(404).send({ error: "No snapshots found for this user." });
+    }
+
+    const snapshots = doc.data().snapshots;
+    // Sort snapshots in descending order by date
+    snapshots.sort((a, b) => new Date(b.meta.saved_at_utc) - new Date(a.meta.saved_at_utc));
+
+
+    res.status(200).send(snapshots);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
 
 app.get("/user/:uid", async (req, res) => {
   const { uid } = req.params

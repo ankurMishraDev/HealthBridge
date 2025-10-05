@@ -323,8 +323,6 @@ export const Dashboard: React.FC<DashboardProps> = ({
         {dashboardPage === "sessions" && (
           <SessionsSection
             setCurrentView={setCurrentView}
-            isLoadingSession={isLoadingSession}
-            sessionSummary={sessionSummary}
           />
         )}
 

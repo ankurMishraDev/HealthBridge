@@ -86,3 +86,655 @@ Anamai:
 साथ ही, क्या आप बताएँगे: क्या आप तंबाकू/शराब लेते हैं, आपका रोज़ का खाना कैसा है, पानी कितना पीते हैं, और आप कोई शारीरिक कसरत करते हैं?”
 Optional (for dev use): Red-Flag Response Snippet
 If any listed red-flag detected → stop advice, show emergency line above, optionally share nearest facility if known.
+
+12 Doctor Recommendation
+After analyzing the user's response and requirements, suggest 2-3 suitable doctors from the following list. The selection should be based on the user's requirements and the doctor's specialty, age, and language preference.
+
+ID: DOC001
+Name: Dr. Pooja Reddy
+Gender: Female
+Age: 32
+Specialization: Dermatologist
+Degrees: MS (Ortho)
+Experience (years): 1
+Languages: Hindi, English
+Facility: CHC
+Contact Phone: +917863794026
+Location: Mysuru, Mysuru, Karnataka - 466778 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC002
+Name: Dr. Vivek Khan
+Gender: Male
+Age: 48
+Specialization: Orthopedic Surgeon
+Degrees: MBBS, Diploma
+Experience (years): 20
+Languages: Hindi
+Facility: PHC
+Contact Phone: +917310341316
+Location: Jaipur, Jaipur, Rajasthan - 401476 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC003
+Name: Dr. Harish Patel
+Gender: Male
+Age: 43
+Specialization: Oncologist
+Degrees: MD (Medicine)
+Experience (years): 6
+Languages: Hindi, English, Telugu
+Facility: Private Clinic
+Contact Phone: +919305641395
+Location: Kurnool, Kurnool, Andhra Pradesh - 332955 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC004
+Name: Dr. Bhavna Joshi
+Gender: Female
+Age: 41
+Specialization: Dermatologist
+Degrees: MBBS, Diploma
+Experience (years): 9
+Languages: English, Punjabi, Hindi
+Facility: CHC
+Contact Phone: +919122691669
+Location: Faridabad, Faridabad, Haryana - 600785 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC005
+Name: Dr. Komal Sharma
+Gender: Female
+Age: 60
+Specialization: Oncologist
+Degrees: MBBS, MD
+Experience (years): 22
+Languages: English, Hindi
+Facility: PHC
+Contact Phone: +917148932528
+Location: Dharmanagar, Dharmanagar, Tripura - 666116 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC006
+Name: Dr. Isha Khan
+Gender: Female
+Age: 45
+Specialization: Psychiatrist
+Degrees: MBBS, MS
+Experience (years): 2
+Languages: Hindi
+Facility: PHC
+Contact Phone: +917782489638
+Location: Ranchi, Ranchi, Jharkhand - 320922 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC007
+Name: Dr. Bhavna Thakur
+Gender: Female
+Age: 54
+Specialization: Emergency Medicine
+Degrees: MBBS, MS
+Experience (years): 8
+Languages: English
+Facility: Govt Hospital OPD
+Contact Phone: +919031051834
+Location: Kangra, Kangra, Himachal Pradesh - 618993 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC008
+Name: Dr. Manish Reddy
+Gender: Male
+Age: 52
+Specialization: Family Medicine
+Degrees: MBBS, MD
+Experience (years): 4
+Languages: English, Hindi
+Facility: NGO Clinic
+Contact Phone: +919651333872
+Location: Rudrapur, Rudrapur, Uttarakhand - 552374 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC009
+Name: Dr. Prakash Iyer
+Gender: Male
+Age: 29
+Specialization: Orthopedic Surgeon
+Degrees: MBBS, MD
+Experience (years): 1
+Languages: Hindi
+Facility: NGO Clinic
+Contact Phone: +919606474687
+Location: Prayagraj, Prayagraj, Uttar Pradesh - 272316 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC010
+Name: Dr. Vivek Verma
+Gender: Male
+Age: 29
+Specialization: Neurologist
+Degrees: MPT
+Experience (years): 5
+Languages: Hindi
+Facility: PHC
+Contact Phone: +917361939909
+Location: Dehradun, Dehradun, Uttarakhand - 195965 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC011
+Name: Dr. Deepak Pawar
+Gender: Male
+Age: 46
+Specialization: Ophthalmologist
+Degrees: BPT
+Experience (years): 9
+Languages: Hindi
+Facility: Private Clinic
+Contact Phone: +917911838425
+Location: Durg, Durg, Chhattisgarh - 182132 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC012
+Name: Dr. Meera Das
+Gender: Female
+Age: 45
+Specialization: Urologist
+Degrees: MBBS
+Experience (years): 17
+Languages: Hindi, English
+Facility: PHC
+Contact Phone: +918935348740
+Location: Muzaffarpur, Muzaffarpur, Bihar - 206781 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC013
+Name: Dr. Anjali Verma
+Gender: Female
+Age: 42
+Specialization: Infectious Disease
+Degrees: MD (Medicine)
+Experience (years): 15
+Languages: Hindi
+Facility: PHC
+Contact Phone: +917826204505
+Location: Jabalpur, Jabalpur, Madhya Pradesh - 330281 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC014
+Name: Dr. Anita Azad
+Gender: Female
+Age: 35
+Specialization: Geriatrician
+Degrees: MBBS, DNB
+Experience (years): 3
+Languages: Assamese, Hindi
+Facility: NGO Clinic
+Contact Phone: +919160733754
+Location: Jorhat, Jorhat, Assam - 348651 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC015
+Name: Dr. Vivek Banerjee
+Gender: Male
+Age: 48
+Specialization: Pulmonologist
+Degrees: MD (Pediatrics)
+Experience (years): 13
+Languages: Telugu, Hindi, English
+Facility: CHC
+Contact Phone: +917655698169
+Location: Nizamabad, Nizamabad, Telangana - 309312 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC016
+Name: Dr. Rajat Sharma
+Gender: Male
+Age: 30
+Specialization: Physiotherapist
+Degrees: MD (Pediatrics)
+Experience (years): 3
+Languages: Hindi
+Facility: Private Clinic
+Contact Phone: +917482366299
+Location: Bilaspur, Bilaspur, Chhattisgarh - 425568 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC017
+Name: Dr. Amit Das
+Gender: Male
+Age: 64
+Specialization: Nephrologist
+Degrees: MPT
+Experience (years): 30
+Languages: Hindi, Tamil
+Facility: NGO Clinic
+Contact Phone: +918895134332
+Location: Madurai, Madurai, Tamil Nadu - 135611 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC018
+Name: Dr. Nitin Mehta
+Gender: Male
+Age: 62
+Specialization: Infectious Disease
+Degrees: MPT
+Experience (years): 25
+Languages: Hindi, English
+Facility: PHC
+Contact Phone: +917870831727
+Location: Prayagraj, Prayagraj, Uttar Pradesh - 666932 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC019
+Name: Dr. Sam Khan
+Gender: Other
+Age: 53
+Specialization: Emergency Medicine
+Degrees: MBBS, DNB
+Experience (years): 15
+Languages: Punjabi, English, Hindi
+Facility: Private Clinic
+Contact Phone: +918714345581
+Location: Rohtak, Rohtak, Haryana - 255095 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC020
+Name: Dr. Mahesh Rao
+Gender: Male
+Age: 52
+Specialization: Physiotherapist
+Degrees: MPT
+Experience (years): 18
+Languages: Hindi, English
+Facility: NGO Clinic
+Contact Phone: +918054668893
+Location: Surat, Surat, Gujarat - 621945 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC021
+Name: Dr. Rajat Gowda
+Gender: Male
+Age: 51
+Specialization: Oncologist
+Degrees: MBBS, DNB
+Experience (years): 15
+Languages: Hindi
+Facility: Govt Hospital OPD
+Contact Phone: +919720465375
+Location: Ujjain, Ujjain, Madhya Pradesh - 463894 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC022
+Name: Dr. Bhavna Nair
+Gender: Female
+Age: 27
+Specialization: Family Medicine
+Degrees: BDS
+Experience (years): 1
+Languages: English
+Facility: PHC
+Contact Phone: +919923271937
+Location: Jalandhar, Jalandhar, Punjab - 378690 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC023
+Name: Dr. Priya Mehta
+Gender: Female
+Age: 32
+Specialization: Gastroenterologist
+Degrees: MBBS, Diploma
+Experience (years): 1
+Languages: Urdu, English, Hindi
+Facility: PHC
+Contact Phone: +917491905865
+Location: Jammu, Jammu, Jammu & Kashmir - 182306 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC024
+Name: Dr. Kiran Sharma
+Gender: Female
+Age: 49
+Specialization: Physiotherapist
+Degrees: BPT
+Experience (years): 5
+Languages: English
+Facility: Private Clinic
+Contact Phone: +918945314737
+Location: Mohali, Mohali, Punjab - 707530 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC025
+Name: Dr. Bhavna Khan
+Gender: Female
+Age: 57
+Specialization: ENT Specialist
+Degrees: MBBS, Diploma
+Experience (years): 23
+Languages: Hindi
+Facility: Private Clinic
+Contact Phone: +919678377701
+Location: Ujjain, Ujjain, Madhya Pradesh - 418528 (Semi-Urban)
+-----------------------------------
+ID: DOC026
+Name: Dr. Arun Das
+Gender: Male
+Age: 61
+Specialization: Family Medicine
+Degrees: BPT
+Experience (years): 23
+Languages: Bengali, English, Hindi
+Facility: Private Clinic
+Contact Phone: +917351823374
+Location: Dharmanagar, Dharmanagar, Tripura - 728226 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC027
+Name: Dr. Sam Mehta
+Gender: Other
+Age: 40
+Specialization: Gastroenterologist
+Degrees: MBBS, Diploma
+Experience (years): 3
+Languages: Hindi
+Facility: CHC
+Contact Phone: +917271094777
+Location: Coimbatore, Coimbatore, Tamil Nadu - 467256 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC028
+Name: Dr. Rohit Nair
+Gender: Male
+Age: 57
+Specialization: Dentist
+Degrees: MBBS, DNB
+Experience (years): 4
+Languages: English
+Facility: CHC
+Contact Phone: +917677496499
+Location: Ranchi, Ranchi, Jharkhand - 173156 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC029
+Name: Dr. Anita Jain
+Gender: Female
+Age: 31
+Specialization: Oncologist
+Degrees: MBBS, DNB
+Experience (years): 2
+Languages: Hindi
+Facility: NGO Clinic
+Contact Phone: +919344713493
+Location: Mandi, Mandi, Himachal Pradesh - 555790 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC030
+Name: Dr. Arun Joshi
+Gender: Male
+Age: 29
+Specialization: Gynecologist
+Degrees: MS (Ortho)
+Experience (years): 3
+Languages: English, Gujarati, Hindi
+Facility: NGO Clinic
+Contact Phone: +917877190659
+Location: Vadodara, Vadodara, Gujarat - 372529 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC031
+Name: Dr. Arun Thakur
+Gender: Male
+Age: 62
+Specialization: Pulmonologist
+Degrees: MPT
+Experience (years): 12
+Languages: English, Hindi
+Facility: NGO Clinic
+Contact Phone: +918655125674
+Location: Dehradun, Dehradun, Uttarakhand - 529904 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC032
+Name: Dr. Komal Verma
+Gender: Female
+Age: 46
+Specialization: Pulmonologist
+Degrees: MD (Medicine)
+Experience (years): 13
+Languages: English
+Facility: NGO Clinic
+Contact Phone: +917770348247
+Location: Gurugram, Gurugram, Haryana - 618257 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC033
+Name: Dr. Rajesh Iyer
+Gender: Male
+Age: 26
+Specialization: Endocrinologist
+Degrees: MBBS, MD
+Experience (years): 1
+Languages: Hindi
+Facility: PHC
+Contact Phone: +917467737826
+Location: Shillong, Shillong, Meghalaya - 309869 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC034
+Name: Dr. Payal Reddy
+Gender: Female
+Age: 47
+Specialization: Physiotherapist
+Degrees: MBBS
+Experience (years): 9
+Languages: English, Gujarati
+Facility: Govt Hospital OPD
+Contact Phone: +917755886753
+Location: Ahmedabad, Ahmedabad, Gujarat - 360405 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC035
+Name: Dr. Shweta Mukherjee
+Gender: Female
+Age: 50
+Specialization: Family Medicine
+Degrees: MD (Pediatrics)
+Experience (years): 22
+Languages: Marathi
+Facility: CHC
+Contact Phone: +918187026217
+Location: Nagpur, Nagpur, Maharashtra - 387896 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC036
+Name: Dr. Mahesh Joshi
+Gender: Male
+Age: 50
+Specialization: Endocrinologist
+Degrees: MD (Psychiatry)
+Experience (years): 21
+Languages: Hindi, English
+Facility: Private Clinic
+Contact Phone: +919172400504
+Location: Varanasi, Varanasi, Uttar Pradesh - 485876 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC037
+Name: Dr. Manish Iyer
+Gender: Male
+Age: 37
+Specialization: Oncologist
+Degrees: MBBS, MD
+Experience (years): 3
+Languages: Hindi
+Facility: Govt Hospital OPD
+Contact Phone: +918407482175
+Location: Korba, Korba, Chhattisgarh - 726113 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC038
+Name: Dr. Rajat Rao
+Gender: Male
+Age: 50
+Specialization: Ophthalmologist
+Degrees: MBBS, MS
+Experience (years): 4
+Languages: English, Kannada
+Facility: Private Clinic
+Contact Phone: +918090974395
+Location: Hubballi, Hubballi, Karnataka - 339642 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC039
+Name: Dr. Isha Nair
+Gender: Female
+Age: 34
+Specialization: Oncologist
+Degrees: MBBS, Diploma
+Experience (years): 1
+Languages: Hindi, English
+Facility: PHC
+Contact Phone: +919285884247
+Location: Dharmanagar, Dharmanagar, Tripura - 419478 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC040
+Name: Dr. Kiran Yadav
+Gender: Female
+Age: 51
+Specialization: Cardiologist
+Degrees: MBBS, MD
+Experience (years): 12
+Languages: Hindi, Punjabi
+Facility: PHC
+Contact Phone: +917513709859
+Location: Gurugram, Gurugram, Haryana - 342120 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC041
+Name: Dr. Seema Rao
+Gender: Female
+Age: 28
+Specialization: Dermatologist
+Degrees: MPT
+Experience (years): 3
+Languages: Tamil
+Facility: Govt Hospital OPD
+Contact Phone: +917869261796
+Location: Salem, Salem, Tamil Nadu - 403328 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC042
+Name: Dr. Harish Jain
+Gender: Male
+Age: 32
+Specialization: Psychiatrist
+Degrees: MD (Pediatrics)
+Experience (years): 5
+Languages: Hindi, Punjabi
+Facility: CHC
+Contact Phone: +917900532931
+Location: Panipat, Panipat, Haryana - 691128 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC043
+Name: Dr. Vivek Iyer
+Gender: Male
+Age: 43
+Specialization: General Physician
+Degrees: MD (Medicine)
+Experience (years): 5
+Languages: Hindi, English
+Facility: CHC
+Contact Phone: +919240268117
+Location: Warangal, Warangal, Telangana - 580050 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC044
+Name: Dr. Payal Pawar
+Gender: Female
+Age: 65
+Specialization: Cardiologist
+Degrees: MBBS, Diploma
+Experience (years): 34
+Languages: Hindi
+Facility: NGO Clinic
+Contact Phone: +918711592124
+Location: Kota, Kota, Rajasthan - 764644 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC045
+Name: Dr. Komal Rao
+Gender: Female
+Age: 44
+Specialization: Emergency Medicine
+Degrees: MS (Ortho)
+Experience (years): 17
+Languages: Hindi, English
+Facility: CHC
+Contact Phone: +918766156545
+Location: Khammam, Khammam, Telangana - 270053 (Urban)
+----------------------------------------------------------------------
+
+ID: DOC046
+Name: Dr. Nisha Gupta
+Gender: Female
+Age: 32
+Specialization: Physiotherapist
+Degrees: MD (Medicine)
+Experience (years): 2
+Languages: English
+Facility: NGO Clinic
+Contact Phone: +918945198327
+Location: Lucknow, Lucknow, Uttar Pradesh - 345137 (Rural)
+----------------------------------------------------------------------
+
+ID: DOC047
+Name: Dr. Meera Kulkarni
+Gender: Female
+Age: 40
+Specialization: Nephrologist
+Degrees: MS (Ortho)
+Experience (years): 9
+Languages: English, Hindi, Telugu
+Facility: CHC
+Contact Phone: +918022961201
+Location: Vijayawada, Vijayawada, Andhra Pradesh - 666251 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC048
+Name: Dr. Rajat Chatterjee
+Gender: Male
+Age: 46
+Specialization: Gastroenterologist
+Degrees: MBBS
+Experience (years): 3
+Languages: Hindi
+Facility: PHC
+Contact Phone: +917679764381
+Location: Warangal, Warangal, Telangana - 471939 (Semi-Urban)
+----------------------------------------------------------------------
+
+ID: DOC049
+Name: Dr. Rakesh Thakur
+Gender: Male
+Age: 45
+Specialization: Emergency Medicine
+Degrees: BPT
+Experience (years): 8
+Languages: Hindi, Bengali, English
+Facility: CHC
+Contact Phone: +918107622683
+Location: Dharmanagar, Dharmanagar, Tripura - 634563 (Semi-Urban)
+-----------------------------------
+
+ID: DOC050
+Name: Dr. Meera Gupta
+Gender: Female
+Age: 55
+Specialization: General Physician
+Degrees: BDS
+Experience (years): 28
+Languages: English, Hindi, Malayalam
+Facility: PHC
+Contact Phone: +917751613696
+Location: Kottayam, Kottayam, Kerala - 659414 (Semi-Urban)
+-----------------------------------

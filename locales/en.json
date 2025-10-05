@@ -1,10 +1,10 @@
 {
   "hero_AnamAi": "AnamAi",
   "hero_ourMission": "Services",
-  "hero_resources": "Simple Workflow",
+  "hero_resources": "Workflow",
   "hero_faq": "FAQ",
   "hero_title": "AI-Powered medical assistant for your good health",
-  "hero_button": "Get AI Assistance Now",
+  "hero_button": "Web Chat with Agent",
 
   "content_whyChoose": "Why Choose HealthBridge?",
   "content_experience": "Experience the high quality medical assistance with our AI-powered platform designed specifically for rural area people.",
@@ -116,11 +116,11 @@
   "home_startSession": "Start Session",
   "home_quickTip": "Quick Tip",
   "home_howFeeling": "How are you feeling today?",
-  "home_howFeelingDesc": "Start a conversation with Curie, your AI guide, anytime you need support.",
+  "home_howFeelingDesc": "Start a conversation with anamai, your AI guide, anytime you need support.",
   "home_startAiSession": "Start AI Session",
 
-  "sessions_curie": "Curie your AI guide",
-  "sessions_curieDesc": "Connect with Curie, your AI guide, for personalized support and guidance.",
+  "sessions_curie": "anamai your AI guide",
+  "sessions_curieDesc": "Connect with anamai, your AI guide, for personalized support and guidance.",
   "sessions_startNew": "Start New Session",
   "sessions_summary": "Summary",
   "sessions_loading": "Loading session data...",
@@ -154,5 +154,12 @@
   "profile_edit": "Edit Profile",
   "profile_saving": "Saving...",
   "profile_confirm": "Confirm",
-  "profile_cancel": "Cancel"
+  "profile_cancel": "Cancel",
+  "snapshot_conclusion": "AI Based Conclusion",
+  "snapshot_concerns": "Problems/Concerns",
+  "snapshot_problems": "Main Problems",
+  "snapshot_recommendation": "Triage Recommendation",
+  "snapshot_solution": "Solution",
+  "snapshot_summary": "Summary of Interaction",
+  "snapshot_symptoms": "Symptom Details"
 }

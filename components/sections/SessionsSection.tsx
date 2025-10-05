@@ -9,93 +9,80 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
 import { ViewType } from "../../lib/types";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { SessionSnapshots } from "./SessionSnapshots";
 
 interface SessionsSectionProps {
   setCurrentView: (view: ViewType) => void;
-  isLoadingSession: boolean;
-  sessionSummary: any;
 }
 
 export const SessionsSection: React.FC<SessionsSectionProps> = ({
   setCurrentView,
-  isLoadingSession,
-  sessionSummary,
 }) => {
   const { t } = useTranslation();
-  return (
-    <div className="flex gap-6">
-      <div className="w-1/2">
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle className="text-2xl">{t("sessions_curie")}</CardTitle>
-            <CardDescription className="text-base">
-              {t("sessions_curieDesc")}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button
-              onClick={() => setCurrentView("session")}
-              className="w-full h-16 text-xl font-semibold"
-            >
-              <MessageCircle className="h-6 w-6 mr-3" />
-              {t("sessions_startNew")}
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+  const { currentUser } = useAuth();
+  const [snapshots, setSnapshots] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-      <div className="w-1/2">
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle>{t("sessions_summary")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-          {isLoadingSession ? (
+  useEffect(() => {
+    const fetchSnapshots = async () => {
+      if (!currentUser) return;
+      try {
+        const response = await fetch(
+          `http://localhost:3000/get-snapshots/${currentUser.uid}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setSnapshots(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch snapshots", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSnapshots();
+  }, [currentUser]);
+
+  return (
+    <div className="flex flex-col gap-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">{t("sessions_curie")}</CardTitle>
+          <CardDescription className="text-base">
+            {t("sessions_curieDesc")}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button
+            onClick={() => setCurrentView("session")}
+            className="w-full h-16 text-xl font-semibold"
+          >
+            <MessageCircle className="h-6 w-6 mr-3" />
+            {t("sessions_startNew")}
+          </Button>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("sessions_summary")}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isLoading ? (
             <div className="flex items-center justify-center h-16">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-              <p className="ml-2 text-sm text-muted-foreground">{t("sessions_loading")}</p>
-            </div>
-          ) : sessionSummary ? (
-            <div className="space-y-3">
-              <div className="text-sm">
-                <p className="font-medium text-foreground mb-2">{t("sessions_lastSummary")}</p>
-                {sessionSummary.description || sessionSummary.summary_text || sessionSummary.summary ? (
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {sessionSummary.description || sessionSummary.summary_text || sessionSummary.summary}
-                    </p>
-                    {sessionSummary.generated_at_utc && (
-                      <div className="text-xs text-muted-foreground mt-3 pt-2 border-t border-border">
-                        {t("sessions_completed", { date: new Date(sessionSummary.generated_at_utc).toLocaleDateString() })}
-                      </div>
-                    )}
-                  </div>
-                ) : sessionSummary.summary_data ? (
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">
-                      {sessionSummary.summary_data.summary ||
-                       sessionSummary.summary_data.summary ||
-                       t("sessions_completedInsights")}
-                    </p>
-                    {sessionSummary.summary_data.generated_at_utc && (
-                      <div className="text-xs text-muted-foreground mt-3 pt-2 border-t border-border">
-                        {t("sessions_completed", { date: new Date(sessionSummary.summary_data.generated_at_utc).toLocaleDateString() })}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <p className="text-sm text-muted-foreground">{t("sessions_noSummary")}</p>
-                )}
-              </div>
+              <p className="ml-2 text-sm text-muted-foreground">
+                {t("sessions_loading")}
+              </p>
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">
-              {t("sessions_completeForHistory")}
-            </p>
+            <SessionSnapshots snapshots={snapshots} />
           )}
         </CardContent>
       </Card>
     </div>
-  </div>
   );
 };

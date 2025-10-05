@@ -537,7 +537,7 @@ class LiveAPIWebSocketServer:
         "diet_type": "",                 # "Vegetarian", "Non-vegetarian", "Mixed"
         "water_intake": "",              # "Adequate", "Low"
         "sleep_hours": "",               # "Good", "Poor", etc.
-        "physical_activity_level": ""    # "Low", "Moderate", "High"
+        "physical_activity_level": ""    # "Low", "Moderate", " "
         },
         "problems_concern": "",            # User-described incidents/causes (e.g., "fell from bike, leg hurt")
         "AI_based_conclusion": "",         # Tentative, non-diagnostic summary of likely issue(s) with uncertainty.
