@@ -1,5 +1,4 @@
 import { Compass, Lock, Sparkles, ShieldCheck, Wallet, Leaf, Plus, Minus, Mail } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTranslation } from "@/hooks/useTranslation"
@@ -41,16 +40,17 @@ export default function FAQ() {
     }
   };
     return (
-        <section id="faq-section" className="relative z-10 py-24 px-6 bg-gradient-to-b from-white to-blue-50/30">
-        <div className="max-w-7xl mx-auto">
-          <div className="rounded-3xl bg-card border border-border p-12 shadow-lg">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <section id="faq-section" className="relative z-10 bg-gradient-to-b from-white to-blue-50/30 py-20 px-4 sm:px-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-3xl bg-card border border-border p-8 shadow-lg sm:p-12">
+            <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
               {/* Left Column - Title and Description */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
+                className="text-center lg:text-left"
               >
                 <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-balance text-foreground">
                   {t("faq_title")}

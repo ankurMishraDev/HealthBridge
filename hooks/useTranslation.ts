@@ -8,7 +8,11 @@ export const useTranslation = () => {
   }
 
   const t = (key: string, params: { [key: string]: string } = {}) => {
-    let translation = context.translations[key] || key;
+    const translationValue =
+      context.translations[key] ??
+      context.fallbackTranslations?.[key] ??
+      key;
+    let translation = translationValue;
     Object.keys(params).forEach(param => {
       translation = translation.replace(`{${param}}`, params[param]);
     });

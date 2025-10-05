@@ -9,13 +9,11 @@ interface LandingProps {
 
 export default function Landing({ onBeginJourney }: LandingProps) {
     return (
-    <div className="min-h-screen flex flex-col">
-        <HeroSection onBeginJourney={onBeginJourney} />
-        <Content />
-        <Faq />
-        <div className="flex ">
-        <Footer />
-        </div>
+    <div className="flex min-h-screen flex-col">
+      <HeroSection onBeginJourney={onBeginJourney} />
+      <Content />
+      <Faq />
+      <Footer />
     </div>
     )
 }
