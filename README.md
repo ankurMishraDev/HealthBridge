@@ -1,119 +1,182 @@
-# [CureZ](https://curez.in/) - Youth's best listener
+# Table of Contents
 
-CureZ is a real-time AI-powered mental wellness platform built to guide and mentor youth through life’s challenges. At the heart of CureZ is Curie, an empathetic AI youth companion that offers secure audio and text sessions, tracks emotional well-being, and recommends personalized coping methods. With its stigma-free, always-available design, CureZ helps young people build resilience, find balance, and take meaningful steps toward better mental health.
-
-<img src="./public/images/Landing.jpg">
-
-
-
-## Table of Contents
-
-- [CureZ - Youth's best listener](#curez---youths-best-listener)
-  - [Table of Contents](#table-of-contents)
-  - [Why we Created the system](#why-we-created-the-system)
+- [Table of Contents](#table-of-contents)
+  - [AnamAi — Voice AI health agent for low-connectivity areas](#anamai--voice-ai-health-agent-for-low-connectivity-areas)
   - [Features](#features)
-  - [Installation](#installation)
-    - [Prerequisites](#prerequisites)
-    - [Backend Setup](#backend-setup)
-  - [Usage](#usage)
-  - [Technologies](#technologies)
-  - [Future Enhancement](#future-enhancement)
-  - [AI session](#ai-session)
+  - [Screenshots](#screenshots)
+    - [Landing Page](#landing-page)
+    - [User Dashboard](#user-dashboard)
+    - [AI Session](#ai-session)
+    - [Sign Up](#sign-up)
+  - [Repository layout](#repository-layout)
+  - [Key server files](#key-server-files)
+  - [Important design \& safety notes](#important-design--safety-notes)
+  - [Prerequisites](#prerequisites)
+  - [Required configuration](#required-configuration)
+  - [Quick start — local development](#quick-start--local-development)
+  - [Features](#features-1)
+  - [Doctor Features](#doctor-features)
+  - [Notes about the AI and retrieval tools](#notes-about-the-ai-and-retrieval-tools)
+  - [Localization](#localization)
+  - [Developer tips](#developer-tips)
+  - [License \& ethics](#license--ethics)
 
-## Why we Created the system
-In India, mental health is often not taken seriously. Fear of judgment from society and pressure from different sources can intensify this struggle,making it diffcult for people to openly talk about their mental well-being. CureZ was created to change that an emotional support AI that is available 24×7 to provide comfort, listen without judgment, and help users find relief from anxiety.
+## AnamAi — Voice AI health agent for low-connectivity areas
 
+This repository contains HealthBridge (AnamAi), a voice-first, low-bandwidth capable AI health assistant built to provide first-level medical guidance and mental wellness support for users in rural or low-connectivity environments. It is intended to offer practical, non-diagnostic advice, basic symptom checks, and triage recommendations — and to connect users with clinicians when needed.
 
 ## Features
-<img src="./public/images/Dashboard.jpg" style="padding-bottom:4px">
 
+- Voice-first interaction (phone/low-bandwidth chat)
+- Multi-language support and offline-friendly content
+- First-level symptom checks and safe self-care suggestions
+- Emergency red-flag detection and triage prompts (AI does NOT diagnose or prescribe)
+- RAG + Google Search retrieval tooling for augmented information
+- Doctor dashboard for creating medical drive posts and managing patients
+- Patient notification system for doctor announcements
+- Breathing exercises and relaxation techniques for mental wellness
+- Journaling and mindfulness activities
 
->- **Curie AI Companion**: Converse with AI in real time in one to one talk session.
->- **Multilingual support**:Allow users to interacte with AI using thier own regional langauge.
->- **Anonymous Chat**: Safe space for users to express feelings without judgment
->- **Resource Library**: Access to relaxation techniques, coping methods, and mental health resources
->- **Mood Tracking**: System calculates user mood based on session interactions
+## Screenshots
 
-## Installation
+### Landing Page
+![Landing Page](public/images/Landing.png)
 
-### Prerequisites
-- Node.js
-- Python 3.x
-- Firebase Admin SDK credentials
-- Google Cloud
-- Google Vertex AI API
+### User Dashboard
+![User Dashboard](public/images/userDashboard.jpg)
 
-### Backend Setup
+### AI Session
+![AI Session](public/images/AISession.jpg)
 
-1. **Cloning the Repo**
-   ```
-   git clone https://github.com/ankurMishraDev/Youth_Mental_Wellness_GenAI.git
-   cd Youth_Mental_Wellness_GenAI
-   npm install
-   # Create a env file
-   ```
-2. **Adding Env**
-   ```bash
-   # Make sure to create ENV file in the root directory
-   NEXT_PUBLIC_FIREBASE_API_KEY = # Add your firbase API_KEY
-   NEXT_PUBLIC_WS_PATH = # Add your Path for the websocket
-   DATABASE_SERVICE_URL = # Add your Database URL
-   ```
-   
-
-3. **Database Server (Node.js + Firebase)**
-
-   - <b>Make sure to create admin-server.json in the Scripts and add the details</b> 
-
-   ```bash
-   cd scripts
-   nodemon db_server.js
-   ```
-
-
-1. **AI WebSocket Server (Python)**
-   
-   - <b>Make sure to enable Vertex AI API service</b>
-   - <b> In root directory create service-account and inside it add google cloud credentials. </b>
-   ```bash
-   # Install Python dependencies
-   pip install -r requirements.txt
-   # Run the WebSocket server
-   python server.py
-   ```
-
-2. **Frontend (Next.js)**
-   ```
-   The frontend is pre-configured and ready to run.
-   ```
+### Sign Up
+![Sign Up](public/images/login.jpg)
 
 
 
-<img src="./public/images/signUp.jpg" style="padding-bottom:5px">
+## Repository layout
 
-## Usage
+- `app/` — Next.js frontend (UI, pages, components, locales, doctor dashboard)
+- `server/` — Python WebSocket AI server and supporting modules (Gemini LiveAPI, config, rag, summarization)
+- `scripts/` — Node.js helper scripts (database server, language file utilities)
+- `locales/` — Translation files (e.g., `en.json`) used by the frontend
+- `components/` — Frontend components including doctor dashboard components
+- `contexts/`, `hooks/`, `lib/` — Frontend utilities and helpers
+- `public/images/` — Screenshots and exercise images for the application
 
-1. Start the database server: `nodemon db_server.js` in the scripts folder
-2. Start the Python WebSocket server from the root directory.
-3. Run the Next.js app: `npm run dev`
-4. Create an account by filling required fields.
-5. After clicking on create Account a mail will be sent to the registered mail id <b>please make sure to check it in spam section</b>
-6. Only after authentication Login to the system can take place
-7. Start AI sessions with Curie and explore resources.
+## Key server files
 
-## Technologies
+- `server/websocket_server.py` — WebSocket server connecting clients to Gemini LiveAPI sessions, handles audio, text, transcript summaries, and tool calls
+- `server/config.py` — Genie/Vertex client setup, LiveAPI default config, tool definitions (RAG tool, Google Search retrieval tool), Pinecone init
+- `server/system_instruction.txt` — Persona and safety system instruction (used as the assistant's default instruction)
 
-- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
-- **Backend**: Node.js, Python, Firebase
-- **AI**: Gemini API
-- **UI Components**: Radix UI, Framer Motion
-- **Database**: Firebase
+## Important design & safety notes
 
-## Future Enhancement
-- **More Personalized coping suggestion**
-- **Curated Support Groups**
-- **Will add system of Journaling**
+- AnamAi provides guidance and education only. It MUST NOT diagnose, prescribe, or alter medications.
+- Emergency red-flag symptoms (chest pain, severe bleeding, difficulty breathing, stroke signs, severe confusion, seizures) should lead users to seek immediate care; AnamAi will recommend emergency services when these appear.
+- Sensitive data is encrypted and controlled by user consent. See `server/config.py` and `server/service-account.json` (not in source control) for credential locations.
 
-## AI session
-<img src="./public/images/CurieAIsession.jpg">
+## Prerequisites
 
+- Node.js (frontend and scripts)
+- Python 3.10+ (server)
+- Google Cloud project with Vertex AI access and an appropriate service account
+- Pinecone account (optional — used for RAG index)
+- Firebase project (for auth and storing user data) if you use the included Node.js DB server
+
+## Required configuration
+
+- `server/service-account.json` — Google service account credentials used by the Python server (Vertex APIs). Place it in `server/` or update `server/config.py` to point to your path.
+- Environment variables (example):
+  - `PINECONE_API_KEY` — Pinecone API key (optional)
+  - `PINECONE_INDEX_NAME` — index name (defaults to `medical-chatbot`)
+  - Frontend envs: `NEXT_PUBLIC_FIREBASE_API_KEY`, `NEXT_PUBLIC_WS_PATH`, etc. (see `.env.local` usage in frontend)
+
+## Quick start — local development
+
+1. Install frontend deps
+
+```powershell
+cd .\
+pnpm install    # or npm install
+```
+
+2. Start the database helper (scripts)
+
+```powershell
+cd scripts
+nodemon db_server.js
+```
+
+3. Prepare Python server credentials and dependencies
+
+```powershell
+cd server
+python -m pip install -r requirements.txt
+# Place your Google service account JSON at server/service-account.json
+# Set envs like PINECONE_API_KEY if you use Pinecone
+python server.py
+```
+
+4. Run the frontend
+
+```powershell
+cd ..\
+pnpm run dev    # or npm run dev
+```
+
+5. Access the application
+
+- User features: Sign up/login at the main landing page
+- Doctor features: Navigate to `/doctor/auth` for doctor login and onboarding
+- Doctor dashboard includes posts creation and patient management
+
+## Features
+- **Multilingual by default**: Auto-detect,handle code-switching,simple phrasing.
+
+- **Low connectivity first**: Telephony IVR + real-time voice; adaptive bitrate; SMS/WhatsApp fallback; DTMF menu; missed-call callback.
+
+- **24×7 ops**: Load-based queueing, failover, callback if wait is long, outage IVR tips.
+
+- **Safe triage**: Cautious impression (no diagnosis), home steps first, red-flag detection → emergency script, “doctor-soon” ladder only if criteria met.
+
+- **Rural access**: Toll-free option, slow/clear prompts, caregiver mode, send steps via SMS.
+
+- **Local health education**: Short audio lessons (ORS, hygiene, vaccination), post-call summary tips.
+
+- **Human in the loop**: Warm transfer when needed; language-matched doctors; consent capture.
+
+- **Doctor directory match**: Filter by language, fees/UPI, locality, modes; suggest top 3; queue-aware fallback.
+
+- **Privacy/consent**: Minimal data, explicit consent, encryption, auto-expiry for casual sessions.
+
+- **Monitoring & quality**: Call analytics, ASR error tags, anonymized symptom clustering for ops.
+
+## Doctor Features
+
+- **Doctor Onboarding**: Complete profile setup with expertise, qualifications, experience, and clinic details
+- **Medical Drive Posts**: Create announcements about upcoming medical camps and health drives
+- **Patient Management**: View and manage associated patients (primary doctor and consulting relationships)
+- **Patient Notifications**: Broadcast posts to all patients with automatic notification delivery
+- **Dashboard Interface**: Dedicated doctor dashboard with posts and patient management sections
+
+## Notes about the AI and retrieval tools
+
+- The Python server uses the Google Generative AI (Gemini) client via `google.genai`.
+- `server/config.py` defines two tools: `rag_tool` (custom RAG function) and `google_search_tool` (GoogleSearchRetrieval). These are exposed to LiveAPI sessions so the model can call them when appropriate.
+- If you enable Google Search retrieval, ensure your Google Cloud project and the used service account have the required permissions and billing enabled.
+
+## Localization
+
+- Translations live in `locales/` as JSON files (for example `locales/en.json`). The frontend loads these for UI text and FAQs.
+- `scripts/create-lang-files.js` can help generate translation scaffolding — review and run it if you update text keys.
+
+## Developer tips
+
+- To change the assistant persona and safety rules, edit `server/system_instruction.txt` (used as SYSTEM_INSTRUCTION in `server/config.py`).
+- Tooling calls from Gemini appear as `tool_call` in `websocket_server.py`. The server already handles a RAG function; if you add handlers for Google Search results, ensure to forward `tool_result` back into the session as needed.
+
+
+
+## License & ethics
+
+- This project is intended to help with first-level health guidance. It is not a replacement for professional medical care. Follow local regulations and medical privacy laws when deploying.
