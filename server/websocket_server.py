@@ -469,6 +469,7 @@ class LiveAPIWebSocketServer:
             "find_main_problems": [], # List of main problems identified during the session.
             "problems_concern": [], # List of problems or concerns raised by the user.
             "solution": [], # List of solutions or recommendations provided.
+            "suggested_doctors": [], # List of suggested doctor IDs.
         }
 
         # --- UPDATED PROMPT: Aligned with Medical Schema ---
@@ -480,7 +481,7 @@ class LiveAPIWebSocketServer:
             "In 'symptom_details', describe the symptoms including onset, duration, and severity as stated by the user. "
             "In 'triage_recommendation', record the final advice the bot gave. "
             "Set 'is_urgent_medical_situation' to true if the user describes life-threatening symptoms (e.g., chest pain, difficulty breathing, uncontrolled bleeding, severe confusion). "
-            "Based on the conversation, provide an 'AI_based_conclusion', identify the 'find_main_problems', list the 'problems_concern' from the user, and outline the 'solution' recommended. "
+            "Based on the conversation, provide an 'AI_based_conclusion', identify the 'find_main_problems', list the 'problems_concern' from the user, outline the 'solution' recommended, and suggest 2-3 suitable doctors by providing their IDs in the 'suggested_doctors' array. "
             "Be precise and objective, using only information from the transcript. "
             "Return ONLY the completed JSON object."
             "\n\n"

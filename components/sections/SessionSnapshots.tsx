@@ -85,7 +85,16 @@ export const SessionSnapshots: React.FC<SessionSnapshotsProps> = ({
                   {snapshot.summary_data.triage_recommendation}
                 </p>
               </div>
-              
+              {snapshot.summary_data.suggested_doctors && snapshot.summary_data.suggested_doctors.length > 0 && (
+                <div>
+                  <h4 className="font-semibold">Suggested Doctors</h4>
+                  <ul className="list-disc list-inside text-sm text-muted-foreground">
+                    {snapshot.summary_data.suggested_doctors.map((doctor: string, index: number) => (
+                      <li key={index}>{doctor}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </AccordionContent>
         </AccordionItem>

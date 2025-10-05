@@ -105,41 +105,35 @@ app.post("/save-summary", async (req, res) => {
 
   try {
     const userRef = db.collection("users").doc(uid);
-    const snapshotWithTimestamp = {
-      ...summary,
-      // Add a server-side timestamp to ensure uniqueness
-      savedAt: admin.firestore.FieldValue.serverTimestamp(),
-    };
+    const doc = await userRef.get();
 
-    // Use arrayUnion to add the new summary to the 'snapshots' array
-    await userRef.update({
-      snapshots: admin.firestore.FieldValue.arrayUnion(snapshotWithTimestamp),
-      latestSummary: summary,
-    });
+    if (!doc.exists) {
+      // If the user document doesn't exist, create it with the first snapshot
+      await userRef.set({
+        snapshots: [summary],
+        latestSummary: summary,
+        suggested_doctors: summary.summary_data.suggested_doctors || [],
+      });
+    } else {
+      // If the document exists, update the snapshots array
+      const existingSnapshots = doc.data().snapshots || [];
+      const newSnapshots = [...existingSnapshots, summary];
+      const updateData = {
+        snapshots: newSnapshots,
+        latestSummary: summary,
+      };
+
+      if (summary.summary_data.suggested_doctors && summary.summary_data.suggested_doctors.length > 0) {
+        updateData.suggested_doctors = admin.firestore.FieldValue.arrayUnion(...summary.summary_data.suggested_doctors);
+      }
+
+      await userRef.update(updateData);
+    }
 
     res.status(200).send({
-      message: "Summary appended successfully to snapshots array and latestSummary updated",
+      message: "Summary saved successfully",
     });
   } catch (error) {
-    // If the document or snapshots field doesn't exist, create it
-    if (error.code === 5) { // 5 = NOT_FOUND
-      try {
-        const userRef = db.collection("users").doc(uid);
-        const snapshotWithTimestamp = {
-          ...summary,
-          savedAt: admin.firestore.FieldValue.serverTimestamp(),
-        };
-        await userRef.set({
-          snapshots: [snapshotWithTimestamp],
-          latestSummary: summary
-        }, { merge: true });
-        return res.status(200).send({
-          message: "Snapshots array created and summary appended successfully",
-        });
-      } catch (e) {
-        return res.status(500).send({ error: e.message });
-      }
-    }
     res.status(500).send({ error: error.message });
   }
 });
